@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="./Images/favicon.ico">
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+  <link rel="stylesheet" href="./stylesheet.css">
+  <script src="./Scripts/firebase.js"></script>
+  <script src="./Scripts/load-data.js"></script>
+  <script src="./Scripts/joinchallenge.js"></script>
+  <title>SLINGSHOT | OSS</title>
+
+</head>
+
+<script>
+
+  var COSS = "CreateOSSWebsites"
+
+</script>
+
+<body>
+
+  <div class="topbar">
+
+    <a href="./dashboard.html"><img src="./Images/SlingShotLogo.png"></a>
+
+    <h4 id="WelcomeText">Welcome NaN</h4>
+
+  </div>
+
+  <h1 class="LargeLogo">DASHBOARD</h1>
+
+  <div class="CurrentOSS">
+
+    <div class="lds-ring" id="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <h2 id="OSSName" class="title"></h2>
+
+    <table style="display: none;" id="table">
+      <tr>
+        <td>
+          <h3><b>Description</b></h3>
+        </td>
+        <td>
+          <h3 id="OSSDesc"></h3>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h3><b>Participants</b></h3>
+        </td>
+        <td>
+          <h3 id="OSSPart"></h3>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h3><b>End Date</b></h3>
+        </td>
+        <td>
+          <h3 id="OSSTime"></h3>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h3><b id="winner">Prize</b></h3>
+        </td>
+        <td>
+          <h3 id="OSSPrize"></h3>
+        </td>
+      </tr>
+    </table>
+
+    <button style="display: none; width: 100%;" id="myBtn" class="joinOSS" style="width: 100%;">Show more!</button>
+    <button style="display: none; width: 100%;" id="finalSubmissions" class="joinOSS" style="width: 100%;">Final
+      submissions</button>
+
+  </div>
+
+  <br><br>
+
+  <div id="myModal" class="modal">
+
+    <div id="modal-content" class="modal-content">
+      <div class="modal-header">
+        <div class="topbar">
+
+          <img style="padding-bottom: 10px;" src="./Images/SlingShotLogo.png">
+          <h3 style="float:right; margin: 75px; margin-bottom: 0px;" id="timeleft"></h3>
+          <span class="close" style="float:right;">&times;</span>
+
+        </div>
+        <h1 id="EOSSName" style="margin-top: 0px;">Modal Header</h1>
+      </div>
+
+      <div class="content">
+
+        <table id="table">
+          <tr>
+            <td>
+              <h3>
+                <h3 class="easy">Beginner</h3>
+              </h3>
+            </td>
+            <td>
+              <h3 id="EOSSBeginner"></h3>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h3>
+                <h3 class="intermediate">Intermediate</h3>
+              </h3>
+            </td>
+            <td>
+              <h3 id="EOSSIntermediate"></h3>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h3>
+                <h3 class="advanced">Advanced</h3>
+              </h3>
+            </td>
+            <td>
+              <h3 id="EOSSAdvanced"></h3>
+            </td>
+          </tr>
+        </table>
+
+      </div>
+
+      <h2 id="PartT" style="display: none; text-decoration: underline; margin: 0px; padding-top: 0px;">Participants</h2>
+
+      <div class="modal-body">
+        <div class="Participants">
+
+          <ol style="display: none;">
+            <li id="Template">Coffee</li>
+          </ol>
+
+          <ul id="ParticipantList">
+            <h2 style="text-decoration: underline; margin: 0px; padding-top: 0px;">Participants</h2>
+          </ul>
+
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row">
+          <div class="column">
+            <h3>
+              <h3 style="text-decoration: underline; font-weight: bold;">Description</h3>
+              <h3 id="EOSSDesc"></h3>
+            </h3>
+          </div>
+          <div class="column">
+            <h3>
+              <h3 style="text-decoration: underline; font-weight: bold;">Prize</h3>
+              <h3 id="EOSSPrize"></h3>
+            </h3>
+          </div>
+          <div class="column">
+            <h3>
+              <h3 style="text-decoration: underline; font-weight: bold;">End Date</h3>
+              <h3 id="EOSSTime"></h3>
+            </h3>
+          </div>
+        </div>
+
+        <button id="JoinChall" style="width: 32%; float: left;" id="myBtn" class="joinOSS">Join challenge!</button>
+        <button id="ViewSubmissions" style="width: 32%; float: left; margin-left: 2%;" id="myBtn" class="joinOSS">View
+          projects!</button>
+        <button id="submitbutton" style="width: 32%; float: right;" id="myBtn" class="joinOSS">Submit / Edit
+          project!</button>
+
+        <br>
+        <br>
+        <br>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <br><br>
+
+        <h3>Slingshot OSS 2021</h3>
+
+      </div>
+
+    </div>
+
+    <div style="display: none;" class="modal-content" id="submit-content">
+
+      <div class="modal-header">
+        <div class="topbar">
+
+          <img style="padding-bottom: 10px;" src="./Images/SlingShotLogo.png">
+          <span class="close">&times;</span>
+
+        </div>
+        <h1 style="margin-top: 10px;">SUBMIT / EDIT PROJECT</h1>
+      </div>
+      <input id="projectname" placeholder="Project Name" autocomplete="off">
+      <input id="projectlink" placeholder="Github Link" autocomplete="off">
+      <textarea id="projectdesc" placeholder="Description of project..." autocomplete="off"></textarea>
+
+      <button id="submitproject" class="joinOSS"
+        style="width: calc(100% - 40px); position:fixed; bottom: 20px; right: 20px;">Submit project</button>
+
+      <script>
+
+        const usersRef = db.collection('OSS').doc(
+          COSS).collection("Submissions")
+
+        usersRef.get().then(querySnapshot => {
+
+          var docs = querySnapshot.docs.map(doc => doc.data())
+
+          for (i in docs) {
+
+            if (docs[i]["Name"] == localStorage.getItem("SLINGSHOTOSSUsername")) {
+
+              document.getElementById("projectname").value = docs[i]["Title"]
+              document.getElementById("projectdesc").value = docs[i]["Description"]
+              document.getElementById("projectlink").value = docs[i]["Github"]
+
+            }
+
+          }
+
+        })
+
+        document.getElementById("submitproject").addEventListener("click", function () {
+
+          usersRef.get().then(querySnapshot => {
+
+            var docs = querySnapshot.docs.map(doc => doc.data())
+
+            for (i in docs) {
+
+              if (docs[i]["Name"] == localStorage.getItem("SLINGSHOTOSSUsername")) {
+
+                usersRef.doc(localStorage.getItem("SLINGSHOTOSSUsername")).set({
+
+                  "Name": localStorage.getItem("SLINGSHOTOSSUsername"),
+                  "Title": document.getElementById("projectname").value,
+                  "Description": document.getElementById("projectdesc").value,
+                  "Github": document.getElementById("projectlink").value
+
+                })
+
+              } else {
+
+                usersRef.doc(localStorage.getItem("SLINGSHOTOSSUsername")).set({
+
+                  "Name": localStorage.getItem("SLINGSHOTOSSUsername"),
+                  "Title": document.getElementById("projectname").value,
+                  "Description": document.getElementById("projectdesc").value,
+                  "Github": document.getElementById("projectlink").value
+
+                })
+
+              }
+
+            }
+
+          })
+
+        })
+
+      </script>
+
+    </div>
+
+    <div style="display: none;" class="modal-content" id="submissions-content">
+
+      <div class="modal-header">
+        <div class="topbar">
+
+          <img style="padding-bottom: 10px;" src="./Images/SlingShotLogo.png">
+          <span class="close">&times;</span>
+
+        </div>
+        <h1 style="margin-top: 10px;">CURRENT PROJECTS</h1>
+      </div>
+
+      <div id="submission" style="display:none;" class="submission">
+
+        <a target="_blank" id="titleofproject"
+          style="text-decoration: underline; font-weight: bold; margin: 0px; margin-top: 25px; float: left;">Title</a>
+        <h3 id="authorofproject" style="font-weight: bold; float: right; margin: 0px; margin-top: 25px;">Made by User
+        </h3>
+
+        <br><br><br>
+
+        <h3 id="descriptionofproject" style="float:left; margin: 0px;">This is the super long description.<a
+            style="float:left;" id="githubofproject"></a></h3>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>
+
+<script>
+
+  function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
+  }
+
+  try {
+
+    Dict = GetChallenge("CreateOSSWebsites")
+
+  } catch (err) {
+
+    console.log(err)
+
+  }
+
+  if (localStorage.getItem("SLINGSHOTOSSUsername") == null) {
+
+    location.href = "./login.html"
+
+  }
+
+  document.getElementById("WelcomeText").innerHTML = "Welcome " + localStorage.getItem("SLINGSHOTOSSUsername") + " 🚀"
+
+  Data = GetChallenge(COSS)
+
+  usersRef.get().then(querySnapshot => {
+
+    var docs = querySnapshot.docs.map(doc => doc.data())
+
+    for (i in docs) {
+
+      var Project = docs[i]
+      var ProjectPage = document.getElementById("submission").cloneNode(true)
+
+      if (localStorage.getItem("SLINGSHOTOSSUsername") == Project["Name"]) {
+
+        ProjectPage.childNodes[1].innerHTML = "(You)" + Project["Title"] + " - " + Project["Github"]
+
+      } else {
+
+        ProjectPage.childNodes[1].innerHTML = Project["Title"] + " - " + Project["Github"]
+
+      }
+
+      ProjectPage.childNodes[1].href = Project["Github"]
+      ProjectPage.childNodes[3].innerHTML = Project["Name"]
+      ProjectPage.childNodes[9].innerHTML = Project["Description"]
+
+
+      ProjectPage.style.display = "block"
+
+      document.getElementById("submissions-content").append(ProjectPage)
+
+    }
+
+
+  })
+
+  setTimeout(function () {
+
+    document.getElementById("lds-ring").style.display = "none"
+    document.getElementById('table').style.display = "block"
+    document.getElementById('myBtn').style.display = "none"
+    document.getElementById("OSSName").innerHTML = Data["Name"]
+    document.getElementById("EOSSName").innerHTML = Data["Name"]
+    document.getElementById("OSSDesc").innerHTML = Data["Desc"]
+    document.getElementById("EOSSDesc").innerHTML = Data["Desc"]
+    document.getElementById("OSSPart").innerHTML = Data["Part"].length
+    document.getElementById("OSSTime").innerHTML = Data["Time"]
+    document.getElementById("EOSSTime").innerHTML = Data["Time"]
+    document.getElementById("OSSPrize").innerHTML = Data["Prize"]
+    document.getElementById("EOSSPrize").innerHTML = Data["Prize"]
+    document.getElementById("EOSSBeginner").innerHTML = Data["Chal"][0]
+    document.getElementById("EOSSIntermediate").innerHTML = Data["Chal"][1]
+    document.getElementById("EOSSAdvanced").innerHTML = Data["Chal"][2]
+
+    if (Data["Part"].length == 0) {
+
+      var NewBullet = document.getElementById("Template").cloneNode(true)
+
+      NewBullet.innerHTML = "Be the first to join!"
+
+      document.getElementById("ParticipantList").appendChild(NewBullet)
+
+    } else {
+
+      for (Person in Data["Part"]) {
+
+        var Player = Data["Part"][Person]
+
+        var NewBullet = document.getElementById("Template").cloneNode(true)
+
+        NewBullet.innerHTML = (Number(Person) + 1) + ". " + Player
+
+        document.getElementById("ParticipantList").appendChild(NewBullet)
+
+      }
+
+      var countDownDate = new Date(Data["Time"]).getTime()
+
+      var tl = document.getElementById("timeleft")
+
+
+
+      var myfunc = setInterval(function () {
+
+        var timestring = "Time Left: "
+
+        var now = new Date().getTime();
+        var timeleft = countDownDate - now;
+
+        var hours = Math.floor((timeleft / (1000 * 60 * 60 * 24)) * 24);
+        var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+
+        if (String(hours).length == 1) {
+
+          timestring = timestring + "0" + String(hours) + ":"
+
+        } else {
+
+          timestring = timestring + String(hours) + ":"
+
+        }
+
+        if (String(minutes).length == 1) {
+
+          timestring = timestring + "0" + String(minutes) + ":"
+
+        } else {
+
+          timestring = timestring + String(minutes) + ":"
+
+        }
+
+        if (String(seconds).length == 1) {
+
+          timestring = timestring + "0" + String(seconds)
+
+        } else {
+
+          timestring = timestring + String(seconds)
+
+        }
+
+        tl.innerHTML = timestring
+
+        if (timeleft < 0) {
+          closeproject()
+          clearInterval(myfunc);
+        } else {
+
+          finished = 0
+
+          document.getElementById('myBtn').style.display = "block"
+
+        }
+      }, 1000);
+
+    }
+
+  }, 3000)
+
+  var modal = document.getElementById("myModal");
+
+  function closeproject() {
+
+    finished = 1
+
+    document.getElementById("myBtn").style.display = "none"
+    document.getElementById("finalSubmissions").style.display = "block"
+    document.getElementById("OSSTime").innerHTML = "OSS over!"
+    modal.style.display = "none";
+    document.getElementById("modal-content").remove()
+    document.getElementById("submit-content").remove()
+    document.getElementById("submissions-content")
+    document.getElementById("winner").innerHTML = "Winner"
+
+    if (Data["Winn"] != "") {
+
+      document.getElementById("OSSPrize").innerHTML = Data["Winn"]
+
+    } else {
+
+      document.getElementById("OSSPrize").innerHTML = "To be announced..."
+
+    }
+
+  }
+
+  finished = 1
+
+  var btn = document.getElementById("myBtn");
+  var fbtn = document.getElementById("finalSubmissions");
+  var span = document.getElementsByClassName("close")[0];
+  var sspan = document.getElementsByClassName("close")[1];
+  var ssspan = document.getElementsByClassName("close")[2];
+  btn.onclick = function () {
+    modal.style.display = "block";
+  }
+
+  fbtn.onclick = function () {
+    modal.style.display = "block";
+    finished = 1
+    document.getElementById("submissions-content").style.display = "block"
+  }
+
+  span.onclick = function () {
+    modal.style.display = "none";
+
+    document.getElementById("submit-content").style.display = "none"
+    document.getElementById("submissions-content").style.display = "none"
+    document.getElementById("modal-content").style.display = "block"
+
+  }
+
+  sspan.onclick = function () {
+    modal.style.display = "none";
+    document.getElementById("submit-content").style.display = "none"
+    document.getElementById("submissions-content").style.display = "none"
+    document.getElementById("modal-content").style.display = "block"
+  }
+
+  ssspan.onclick = function () {
+    modal.style.display = "none";
+
+    if (finished == 1) {
+
+      document.getElementById("submissions-content").style.display = "none"
+
+    } else {
+
+      document.getElementById("submit-content").style.display = "none"
+      document.getElementById("submissions-content").style.display = "none"
+      document.getElementById("modal-content").style.display = "block"
+
+    }
+
+
+  }
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+      document.getElementById("submit-content").style.display = "none"
+      document.getElementById("submissions-content").style.display = "none"
+      document.getElementById("modal-content").style.display = "block"
+    }
+  }
+
+  document.getElementById("submitbutton").addEventListener("click", function () {
+
+    document.getElementById("submissions-content").style.display = "none"
+    document.getElementById("submit-content").style.display = "block"
+    document.getElementById("modal-content").style.display = "none"
+
+  })
+
+  document.getElementById("ViewSubmissions").addEventListener("click", function () {
+
+    document.getElementById("submit-content").style.display = "none"
+    document.getElementById("submissions-content").style.display = "block"
+    document.getElementById("modal-content").style.display = "none"
+
+  })
+
+  document.getElementById("JoinChall").addEventListener("click", function () {
+
+    if (Data["Part"].includes(localStorage.getItem("SLINGSHOTOSSUsername"))) {
+
+      console.log("Nope")
+
+    } else {
+
+      JoinChallenge(COSS, localStorage.getItem("SLINGSHOTOSSUsername"))
+
+      List = document.getElementById("ParticipantList")
+
+    }
+
+  })
+
+</script>

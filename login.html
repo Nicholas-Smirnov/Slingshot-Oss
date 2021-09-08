@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="./Images/favicon.ico">
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+  <link rel="stylesheet" href="./stylesheet.css">
+  <script src="./Scripts/firebase.js"></script>
+  <script src="./Scripts/load-data.js"></script>
+  <script src="./Scripts/login.js"></script>
+  <script src="./Scripts/localcheck.js"></script>
+  <title>SLINGSHOT | LOG IN</title>
+
+</head>
+
+<body>
+
+  <div class="topbar">
+
+    <a href="./index.html"><img src = "./Images/SlingShotLogo.png"></a>
+
+  </div>
+
+  <h1 style = "margin-top: 10px;">LOG IN</h1>
+
+  <div class = "signupbox">
+
+    <input id = "username" placeholder="Username" autocomplete="off">
+    <input id = "password" placeholder="Password" autocomplete="off">
+
+  </div>
+
+  <h3><a href="./signup.html">Don't have an account?</a></h3>
+
+  <button id = "EnterInformation" class = "joinOSS" style = "margin-top: 50px;">Log In</button>
+
+</body>
+
+</html>
+
+<script>
+
+  Username = document.getElementById("username")
+  Password = document.getElementById("password")
+
+  document.getElementById("EnterInformation").addEventListener("click", function() {
+
+    UserValue = Username.value;
+    PassValue = Password.value;
+
+    CheckInfo(UserValue, PassValue)
+
+  })
+
+</script>
